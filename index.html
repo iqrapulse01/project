@@ -1,0 +1,1440 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fans Hub 2026</title>
+
+     <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "FIFA World Cup 2026 Full Fixture List",
+      "description": "Complete match schedule for the 2026 World Cup including venues and kickoff times.",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "SportsEvent",
+            "name": "Mexico vs South Africa",
+            "startDate": "2026-06-11T20:00:00-06:00",
+            "location": {
+              "@type": "Place",
+              "name": "Estadio Azteca",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Mexico City",
+                "addressCountry": "MX"
+              }
+            },
+            "competitor": [
+              { "@type": "SportsTeam", "name": "Mexico" },
+              { "@type": "SportsTeam", "name": "South Africa" }
+            ],
+            "sport": "Soccer",
+            "eventStatus": "https://schema.org/EventScheduled"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "SportsEvent",
+            "name": "USA vs Paraguay",
+            "startDate": "2026-06-12T16:00:00-07:00",
+            "location": {
+              "@type": "Place",
+              "name": "SoFi Stadium",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Los Angeles",
+                "addressRegion": "CA",
+                "addressCountry": "US"
+              }
+            },
+            "competitor": [
+              { "@type": "SportsTeam", "name": "USA" },
+              { "@type": "SportsTeam", "name": "Paraguay" }
+            ],
+            "sport": "Soccer",
+            "eventStatus": "https://schema.org/EventScheduled"
+          }
+        }
+      ]
+    }
+    </script>
+
+
+    <!-- Adsense  -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8793648069353145"
+        crossorigin="anonymous"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Flag Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"
+    />
+    <!-- React and Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0a0c10;
+      }
+      .fi {
+        border-radius: 4px;
+      }
+
+        /* Custom scrollbar for better aesthetic */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0c10;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+
+        /* Improved contrast for interactive elements */
+        button:focus-visible,
+        button:hover {
+            outline: none;
+        }
+
+        .bg-dark {
+            background-color: #0f172a;
+        }
+
+        .text-slate-400 {
+            color: #94a3b8;
+        }
+
+        /* Countdown highlight stronger */
+        .text-blue-500 {
+            color: #38bdf8;
+        }
+
+        /* about page animation  
+         */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes aboutContainerAnim {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fade-in-down {
+            animation: fadeInDown 0.7s ease-out forwards;
+        }
+
+        .animate-about-container {
+            animation: aboutContainerAnim 0.7s 0.2s ease-out forwards;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script>
+      // Initialize lucide icons globally
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    </script>
+
+    <script type="text/babel">
+      const { useState, useEffect, useMemo } = React;
+
+      // Mocking Lucide icons for browser environment
+      const Icon = ({ name, className }) => {
+        const ref = React.useRef(null);
+        React.useLayoutEffect(() => {
+          if (window.lucide && ref.current) {
+            window.lucide.createIcons({ elements: [ref.current] });
+          }
+        }, [name]);
+        return <i ref={ref} data-lucide={name} className={className}></i>;
+      };
+
+      // --- DATA CONSTANTS ---
+      const KICKOFF_DATE = new Date("2026-06-11T12:00:00").getTime();
+
+      const NATIONS_DATA = [
+        {
+          name: "USA",
+          code: "us",
+          status: "Qualified",
+          scout:
+            "Host nation. High athletic intensity and rapid transition play.",
+          outlook:
+            "Quarter-finals. Home advantage and peak generation depth suggest a deep run.",
+        },
+        {
+          name: "Mexico",
+          code: "mx",
+          status: "Qualified",
+          scout:
+            "Host nation. Technical excellence and legendary home atmosphere.",
+          outlook:
+            "Round of 16. Strong home support likely to carry them through a tough group phase.",
+        },
+        {
+          name: "Canada",
+          code: "ca",
+          status: "Qualified",
+          scout:
+            "Host nation. Explosive pace on the wings and tactical flexibility.",
+          outlook:
+            "Group Stage/Round of 16. Fast-improving but still maturing on the world stage.",
+        },
+        {
+          name: "Argentina",
+          code: "ar",
+          status: "Qualified",
+          scout:
+            "Defending champs. Masterful possession and elite creative play.",
+          outlook:
+            "Champions/Finalists. The favorites to defend the crown with tactical consistency.",
+        },
+        {
+          name: "France",
+          code: "fr",
+          status: "Qualified",
+          scout:
+            "Physical dominance combined with world-class individual finishing.",
+          outlook:
+            "Semi-finals. Unmatched squad depth makes them perennial title contenders.",
+        },
+        {
+          name: "Brazil",
+          code: "br",
+          status: "Qualified",
+          scout: "Unmatched technical flair and defensive organization.",
+          outlook:
+            "Finalists. Looking to end the drought with a balanced, star-studded roster.",
+        },
+        {
+          name: "England",
+          code: "gb-eng",
+          status: "Qualified",
+          scout: "Strong set-piece efficiency and depth in attacking midfield.",
+          outlook:
+            "Semi-finals. A robust system and world-class talent should see a deep bracket run.",
+        },
+        {
+          name: "Spain",
+          code: "es",
+          status: "Qualified",
+          scout: "High-tempo passing and positional superiority.",
+          outlook:
+            "Quarter-finals. Dominant possession can be undone by lack of clinical finishing.",
+        },
+        {
+          name: "Germany",
+          code: "de",
+          status: "Qualified",
+          scout: "Verticality, high-pressing, and clinical execution.",
+          outlook:
+            "Semi-finals. Rejuvenated tactical identity puts them back among the elite.",
+        },
+        {
+          name: "Portugal",
+          code: "pt",
+          status: "Qualified",
+          scout: "Blend of elite experience and young creative talent.",
+          outlook:
+            "Quarter-finals. High ceiling, but reliant on navigating ego-heavy dynamics.",
+        },
+        {
+          name: "Netherlands",
+          code: "nl",
+          status: "Qualified",
+          scout: "Tactical innovation and strong ball-playing defenders.",
+          outlook:
+            "Quarter-finals. Difficult to beat, but often lack the elite striker for the title.",
+        },
+        {
+          name: "Belgium",
+          code: "be",
+          status: "Qualified",
+          scout: "Transitioning squad with high technical floor.",
+          outlook:
+            "Round of 16. 'Golden Generation' fading; looking for new leaders to step up.",
+        },
+        {
+          name: "Italy",
+          code: "it",
+          status: "Qualified",
+          scout: "Robust defensive structure and disciplined tactical play.",
+          outlook:
+            "Quarter-finals. Tactical discipline makes them a nightmare in knockout stages.",
+        },
+        {
+          name: "Croatia",
+          code: "hr",
+          status: "Qualified",
+          scout: "Exceptional midfield control and mental resilience.",
+          outlook:
+            "Round of 16. Aging core but remains the masters of knockout extra time.",
+        },
+        {
+          name: "Morocco",
+          code: "ma",
+          status: "Qualified",
+          scout: "Compact defensive block and lethal counter-attacks.",
+          outlook:
+            "Round of 16. Hard to break down, capable of another major upset.",
+        },
+        {
+          name: "Japan",
+          code: "jp",
+          status: "Qualified",
+          scout: "High-speed coordination and disciplined pressing.",
+          outlook:
+            "Round of 16. Tactical discipline and speed will trouble European giants.",
+        },
+        {
+          name: "Senegal",
+          code: "sn",
+          status: "Qualified",
+          scout: "Powerful physical presence and direct attacking style.",
+          outlook:
+            "Round of 16. The strongest African contender for a knockout spot.",
+        },
+        {
+          name: "South Korea",
+          code: "kr",
+          status: "Qualified",
+          scout: "Relentless energy and clinical long-range shooting.",
+          outlook:
+            "Group Stage. High energy but defensive vulnerabilities against top-tier pace.",
+        },
+        {
+          name: "Uruguay",
+          code: "uy",
+          status: "Qualified",
+          scout: "Aggressive pressing and traditional grit in the box.",
+          outlook:
+            "Quarter-finals. Bielsa’s high-intensity style makes them a dark horse.",
+        },
+        {
+          name: "Colombia",
+          code: "co",
+          status: "Qualified",
+          scout: "Creative flair and high-altitude endurance.",
+          outlook:
+            "Round of 16. Technical quality is high, but consistency in big games remains key.",
+        },
+        {
+          name: "Denmark",
+          code: "dk",
+          status: "Qualified",
+          scout: "Collective cohesion and strong aerial threat.",
+          outlook:
+            "Group Stage. Organized but often lack the creative spark for deeper runs.",
+        },
+        {
+          name: "Switzerland",
+          code: "ch",
+          status: "Qualified",
+          scout: "Reliable organization and effective game management.",
+          outlook:
+            "Round of 16. The most consistent 'giant killers' in tournament football.",
+        },
+        {
+          name: "Ecuador",
+          code: "ec",
+          status: "Qualified",
+          scout: "Youthful vigor and rapid wing-back progression.",
+          outlook:
+            "Group Stage/Round of 16. Physically dominant, but young squad may struggle with pressure.",
+        },
+        {
+          name: "Iran",
+          code: "ir",
+          status: "Qualified",
+          scout: "Solid defensive discipline and physical center-forwards.",
+          outlook:
+            "Group Stage. Low block will keep games close but lack of goals is an issue.",
+        },
+        {
+          name: "Australia",
+          code: "au",
+          status: "Qualified",
+          scout: "Strong team spirit and physical set-piece dominance.",
+          outlook:
+            "Group Stage. Resilience is high, but technical gap to top-10 is significant.",
+        },
+        {
+          name: "Saudi Arabia",
+          code: "sa",
+          status: "Qualified",
+          scout: "Technical short-passing and high-line defensive traps.",
+          outlook:
+            "Group Stage. Well-coached but lacks the individual stars for a deep run.",
+        },
+        {
+          name: "Turkey",
+          code: "tr",
+          status: "Qualified",
+          scout: "Passionate attacking play and individual brilliance.",
+          outlook:
+            "Round of 16. Talented youngsters could cause chaos in the bracket.",
+        },
+        {
+          name: "Austria",
+          code: "at",
+          status: "Qualified",
+          scout: "Rangnick-style high intensity and verticality.",
+          outlook:
+            "Round of 16. Their high press will suffocate unprepared opponents.",
+        },
+        {
+          name: "Ukraine",
+          code: "ua",
+          status: "Qualified",
+          scout: "Emotional resilience and technical midfield play.",
+          outlook:
+            "Group Stage/Round of 16. Strong spirit but limited squad depth.",
+        },
+        {
+          name: "Poland",
+          code: "pl",
+          status: "Qualified",
+          scout: "Focus on service to elite strikers and solid keeper play.",
+          outlook:
+            "Group Stage. Over-reliant on individual moments rather than team play.",
+        },
+        {
+          name: "Hungary",
+          code: "hu",
+          status: "Qualified",
+          scout: "Difficult to break down with effective low-block tactics.",
+          outlook:
+            "Group Stage. Tactically disciplined but lacks transition speed.",
+        },
+        {
+          name: "Serbia",
+          code: "rs",
+          status: "Qualified",
+          scout: "Aerial dominance and creative playmaking from deep.",
+          outlook:
+            "Group Stage. High individual talent often let down by defensive lapses.",
+        },
+        {
+          name: "Tunisia",
+          code: "tn",
+          status: "Qualified",
+          scout: "Tactical discipline and defensive solidity.",
+          outlook:
+            "Group Stage. Stout defense but struggles to find the net regularly.",
+        },
+        {
+          name: "Algeria",
+          code: "dz",
+          status: "Qualified",
+          scout: "High technical skill and attacking variety.",
+          outlook: "Round of 16. Flair players can win any game on their day.",
+        },
+        {
+          name: "Egypt",
+          code: "eg",
+          status: "Qualified",
+          scout: "Focused on talismanic wingers and counter-attacks.",
+          outlook:
+            "Group Stage. Threat on the counter but defensive line is vulnerable.",
+        },
+        {
+          name: "Nigeria",
+          code: "ng",
+          status: "Qualified",
+          scout: "Explosive attacking talent and individual 1v1 skill.",
+          outlook:
+            "Round of 16. If the defense holds, the attack can take them far.",
+        },
+        {
+          name: "Cameroon",
+          code: "cm",
+          status: "Qualified",
+          scout: "Physical power and direct vertical football.",
+          outlook:
+            "Group Stage. Powerful but lack the tactical discipline of modern systems.",
+        },
+        {
+          name: "Mali",
+          code: "ml",
+          status: "Qualified",
+          scout: "Athletic midfield dominance and rising young talent.",
+          outlook:
+            "Group Stage. Promising future, but 2026 might come too early for this core.",
+        },
+        {
+          name: "Chile",
+          code: "cl",
+          status: "Qualified",
+          scout: "High-pressing traditional 'Roja' intensity.",
+          outlook:
+            "Group Stage. Hard-working, but lacks the world-class finishers of previous years.",
+        },
+        {
+          name: "Peru",
+          code: "pe",
+          status: "Qualified",
+          scout: "Technical ball control and intricate passing patterns.",
+          outlook:
+            "Group Stage. Beautiful to watch but lacks physicality in the midfield.",
+        },
+        {
+          name: "Paraguay",
+          code: "py",
+          status: "Qualified",
+          scout: "Defensive resilience and aerial set-piece strength.",
+          outlook:
+            "Group Stage. Excellent defensively but struggles to create clear chances.",
+        },
+        {
+          name: "Costa Rica",
+          code: "cr",
+          status: "Qualified",
+          scout: "Legendary defensive organization and counter-punching.",
+          outlook:
+            "Group Stage. Hard to beat, but group strength usually proves too much.",
+        },
+        {
+          name: "Wales",
+          code: "gb-wls",
+          status: "Playoffs",
+          scout: "Passionate collective effort and dangerous on set-pieces.",
+          outlook:
+            "Group Stage. Likely to qualify but struggle against top-tier technical sides.",
+        },
+        {
+          name: "Norway",
+          code: "no",
+          status: "Playoffs",
+          scout: "Built around world-class attacking focal points.",
+          outlook:
+            "Round of 16. With Haaland, they can score against anyone in the knockouts.",
+        },
+      ];
+
+
+      const VENUES = [
+        {
+          name: "MetLife Stadium",
+          city: "East Rutherford",
+          country: "USA",
+          capacity: "82,500",
+          address: "1 MetLife Stadium Dr, East Rutherford, NJ 07073",
+          map: "https://www.google.com/maps/search/?api=1&query=MetLife+Stadium",
+          touristInfo: [
+            "American Dream Mall",
+            "Manhattan Skyline Views",
+            "Liberty State Park",
+          ],
+          travel:
+            "NJ Transit 'Meadowlands Rail Line' from Secaucus Junction. Direct '351 Meadowlands Express' bus from Port Authority NYC.",
+          office: "https://www.visitnj.org/",
+        },
+        {
+          name: "Estadio Azteca",
+          city: "Mexico City",
+          country: "Mexico",
+          capacity: "87,523",
+          address: "Calz. de Tlalpan 3465, Sta. Úrsula Coapa, Coyoacán, 04650",
+          map: "https://www.google.com/maps/search/?api=1&query=Estadio+Azteca",
+          touristInfo: [
+            "Coyoacán (Frida Kahlo Museum)",
+            "Xochimilco Canals",
+            "Zócalo Square",
+          ],
+          travel:
+            "Take Metro Line 2 to Tasqueña station, then transfer to the Tren Ligero (Light Rail) to Estación Estadio Azteca.",
+          office: "https://mexicocity.cdmx.gob.mx/",
+        },
+        {
+          name: "BC Place",
+          city: "Vancouver",
+          country: "Canada",
+          capacity: "54,500",
+          address: "777 Pacific Blvd, Vancouver, BC V6B 4Y8",
+          map: "https://www.google.com/maps/search/?api=1&query=BC+Place",
+          touristInfo: [
+            "Stanley Park Seawall",
+            "Granville Island Public Market",
+            "Gastown Steam Clock",
+          ],
+          travel:
+            "SkyTrain (Expo Line) to Stadium-Chinatown Station. Vancouver False Creek Ferries also stop nearby at Plaza of Nations.",
+          office: "https://www.destinationvancouver.com/",
+        },
+        {
+          name: "SoFi Stadium",
+          city: "Los Angeles",
+          country: "USA",
+          capacity: "70,240",
+          address: "1001 Stadium Dr, Inglewood, CA 90301",
+          map: "https://www.google.com/maps/search/?api=1&query=SoFi+Stadium",
+          touristInfo: [
+            "Santa Monica Pier",
+            "The Getty Center",
+            "Hollywood Walk of Fame",
+          ],
+          travel:
+            "Metro C Line to Hawthorne/Lennox Station, then use the SoFi Stadium Express Shuttle. Rideshare 'Drop-off Zone' is on the North side.",
+          office: "https://www.discoverlosangeles.com/",
+        },
+        {
+          name: "Mercedes-Benz Stadium",
+          city: "Atlanta",
+          country: "USA",
+          capacity: "71,000",
+          address: "1 AMB Dr NW, Atlanta, GA 30313",
+          map: "https://www.google.com/maps/search/?api=1&query=Mercedes-Benz+Stadium",
+          touristInfo: [
+            "Georgia Aquarium",
+            "World of Coca-Cola",
+            "Centennial Olympic Park",
+          ],
+          travel:
+            "MARTA Rail (Blue/Green lines) to GWCC/CNN Center Station or Vine City Station. Both are steps from the gate.",
+          office: "https://discoveratlanta.com/",
+        },
+      ];
+      
+
+      //   Now added 
+        const MATCH_SCHEDULE = [
+            // Group A–D
+            { id: 1, date: "2026-06-11", time: "8:00 PM", group: "A", home: "Mexico", away: "South Africa", venue: "Mexico City" },
+            { id: 2, date: "2026-06-11", time: "4:00 PM", group: "A", home: "South Korea", away: "Denmark / Czechia / Macedonia / Ireland", venue: "Guadalajara" },
+            { id: 3, date: "2026-06-12", time: "8:00 PM", group: "B", home: "Canada", away: "Italy / Wales / Northern Ireland / Bosnia", venue: "Toronto" },
+            { id: 4, date: "2026-06-12", time: "4:00 PM", group: "D", home: "USA", away: "Paraguay", venue: "Los Angeles" },
+            { id: 5, date: "2026-06-13", time: "1:00 PM", group: "B", home: "Qatar", away: "Switzerland", venue: "San Francisco" },
+            { id: 6, date: "2026-06-13", time: "8:00 PM", group: "C", home: "Brazil", away: "Morocco", venue: "New York / New Jersey" },
+            { id: 7, date: "2026-06-13", time: "4:00 PM", group: "C", home: "Haiti", away: "Scotland", venue: "Boston" },
+            { id: 8, date: "2026-06-13", time: "8:00 PM", group: "D", home: "Australia", away: "Turkey / Romania / Slovakia / Kosovo", venue: "Vancouver" },
+            { id: 9, date: "2026-06-18", time: "1:00 PM", group: "A", home: "Denmark / Czechia / Macedonia / Ireland", away: "South Africa", venue: "Atlanta" },
+            { id: 10, date: "2026-06-18", time: "8:00 PM", group: "A", home: "Mexico", away: "South Korea", venue: "Guadalajara" },
+            { id: 11, date: "2026-06-18", time: "4:00 PM", group: "B", home: "Switzerland", away: "Italy / Wales / Northern Ireland / Bosnia", venue: "Los Angeles" },
+            { id: 12, date: "2026-06-18", time: "8:00 PM", group: "B", home: "Canada", away: "Qatar", venue: "Vancouver" },
+            { id: 13, date: "2026-06-19", time: "1:00 PM", group: "C", home: "Scotland", away: "Morocco", venue: "Boston" },
+            { id: 14, date: "2026-06-19", time: "4:00 PM", group: "C", home: "Brazil", away: "Haiti", venue: "Philadelphia" },
+            { id: 15, date: "2026-06-19", time: "4:00 PM", group: "D", home: "Turkey / Romania / Slovakia / Kosovo", away: "Paraguay", venue: "San Francisco" },
+            { id: 16, date: "2026-06-19", time: "8:00 PM", group: "D", home: "USA", away: "Australia", venue: "Seattle" },
+            { id: 17, date: "2026-06-24", time: "8:00 PM", group: "A", home: "Denmark / Czechia / Macedonia / Ireland", away: "Mexico", venue: "Mexico City" },
+            { id: 18, date: "2026-06-24", time: "8:00 PM", group: "A", home: "South Africa", away: "South Korea", venue: "Monterrey" },
+            { id: 19, date: "2026-06-24", time: "4:00 PM", group: "B", home: "Switzerland", away: "Canada", venue: "Vancouver" },
+            { id: 20, date: "2026-06-24", time: "4:00 PM", group: "B", home: "Italy / Wales / Northern Ireland / Bosnia", away: "Qatar", venue: "Seattle" },
+            { id: 21, date: "2026-06-24", time: "1:00 PM", group: "C", home: "Scotland", away: "Brazil", venue: "Miami" },
+            { id: 22, date: "2026-06-24", time: "1:00 PM", group: "C", home: "Morocco", away: "Haiti", venue: "Atlanta" },
+            { id: 23, date: "2026-06-25", time: "8:00 PM", group: "D", home: "Turkey / Romania / Slovakia / Kosovo", away: "USA", venue: "Los Angeles" },
+            { id: 24, date: "2026-06-25", time: "8:00 PM", group: "D", home: "Paraguay", away: "Australia", venue: "San Francisco" },
+            // Groups E–H
+            { id: 25, date: "2026-06-14", time: "1:00 PM", group: "E", home: "Germany", away: "Curaçao", venue: "Houston" },
+            { id: 26, date: "2026-06-14", time: "4:00 PM", group: "E", home: "Ivory Coast", away: "Ecuador", venue: "Philadelphia" },
+            { id: 27, date: "2026-06-14", time: "8:00 PM", group: "F", home: "Netherlands", away: "Japan", venue: "Dallas" },
+            { id: 28, date: "2026-06-14", time: "4:00 PM", group: "F", home: "Ukraine / Sweden / Poland / Albania", away: "Tunisia", venue: "Monterrey" },
+            { id: 29, date: "2026-06-15", time: "4:00 PM", group: "G", home: "Belgium", away: "Iran", venue: "Miami" },
+            { id: 30, date: "2026-06-15", time: "1:00 PM", group: "G", home: "Egypt", away: "New Zealand", venue: "Kansas City" },
+            { id: 31, date: "2026-06-15", time: "8:00 PM", group: "H", home: "Spain", away: "Cabo Verde", venue: "Atlanta" },
+            { id: 32, date: "2026-06-15", time: "4:00 PM", group: "H", home: "Saudi Arabia", away: "Uruguay", venue: "Houston" },
+            { id: 33, date: "2026-06-20", time: "1:00 PM", group: "E", home: "Germany", away: "Ivory Coast", venue: "Toronto" },
+            { id: 34, date: "2026-06-20", time: "4:00 PM", group: "E", home: "Ecuador", away: "Curaçao", venue: "Kansas City" },
+            { id: 35, date: "2026-06-20", time: "8:00 PM", group: "F", home: "Netherlands", away: "Ukraine / Sweden / Poland / Albania", venue: "Houston" },
+            { id: 36, date: "2026-06-20", time: "4:00 PM", group: "F", home: "Tunisia", away: "Japan", venue: "Monterrey" },
+            { id: 37, date: "2026-06-21", time: "4:00 PM", group: "G", home: "Belgium", away: "Egypt", venue: "Atlanta" },
+            { id: 38, date: "2026-06-21", time: "8:00 PM", group: "G", home: "New Zealand", away: "Iran", venue: "Miami" },
+            { id: 39, date: "2026-06-21", time: "4:00 PM", group: "H", home: "Uruguay", away: "Cabo Verde", venue: "Seattle" },
+            { id: 40, date: "2026-06-21", time: "1:00 PM", group: "H", home: "Saudi Arabia", away: "Spain", venue: "Dallas" },
+            // Groups I–L
+            { id: 41, date: "2026-06-16", time: "4:00 PM", group: "I", home: "France", away: "Senegal", venue: "New York/NJ" },
+            { id: 42, date: "2026-06-16", time: "1:00 PM", group: "I", home: "Norway", away: "Iraq / Bolivia / Suriname", venue: "Boston" },
+            { id: 43, date: "2026-06-16", time: "8:00 PM", group: "J", home: "Argentina", away: "Algeria", venue: "Kansas City" },
+            { id: 44, date: "2026-06-17", time: "1:00 PM", group: "J", home: "Austria", away: "Jordan", venue: "Philadelphia" },
+            { id: 45, date: "2026-06-17", time: "1:00 PM", group: "K", home: "Portugal", away: "DR Congo / Jamaica / New Caledonia", venue: "Houston" },
+            { id: 46, date: "2026-06-17", time: "4:00 PM", group: "K", home: "Uzbekistan", away: "Colombia", venue: "Mexico City" },
+            { id: 47, date: "2026-06-17", time: "8:00 PM", group: "L", home: "England", away: "Croatia", venue: "Dallas" },
+            { id: 48, date: "2026-06-17", time: "4:00 PM", group: "L", home: "Ghana", away: "Panama", venue: "Toronto" },
+            { id: 49, date: "2026-06-22", time: "1:00 PM", group: "I", home: "France", away: "Iraq / Bolivia / Suriname", venue: "Philadelphia" },
+            { id: 50, date: "2026-06-22", time: "4:00 PM", group: "J", home: "Argentina", away: "Austria", venue: "New York/NJ" },
+            { id: 51, date: "2026-06-23", time: "8:00 PM", group: "K", home: "Colombia", away: "DR Congo / Jamaica / New Caledonia", venue: "Guadalajara" },
+            { id: 52, date: "2026-06-23", time: "4:00 PM", group: "L", home: "England", away: "Ghana", venue: "Boston" },
+            { id: 53, date: "2026-06-27", time: "1:00 PM", group: "K", home: "DR Congo / Jamaica / New Caledonia", away: "Uzbekistan", venue: "Atlanta" },
+            { id: 54, date: "2026-06-27", time: "8:00 PM", group: "L", home: "Panama", away: "England", venue: "New York/NJ" }
+        ];
+        //Now added 
+
+
+         function SchedulesView() {
+            const [search, setSearch] = React.useState("");
+
+            const filteredMatches = [...MATCH_SCHEDULE]
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .filter(match =>
+                    `${match.home} ${match.away} ${match.venue}`
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+                );
+            //now added
+
+
+            
+            return (
+                <div className="max-w-2xl mx-auto space-y-6">
+                    <h2 className="text-4xl font-black text-white italic uppercase  pt-12">
+                        Match Schedule
+                    </h2>
+
+
+                    <input
+                        type="text"
+                        placeholder="Search team or venue..."
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                        className="w-full bg-dark border border-white/5 rounded-2xl py-4 px-6 outline-none text-white focus:border-blue-500/50"
+                    />
+
+                    {filteredMatches.map(match => (
+                        <div
+                            key={match.id}
+                            className="bg-dark p-6 rounded-2xl border border-white/5"
+                        >
+                            <p className="text-white font-bold">
+                                {match.home} vs {match.away}
+                            </p>
+                            <p className="text-slate-400 text-sm">
+                                {match.date} • {match.time}
+                            </p>
+                            <p className="text-blue-500 text-sm">
+                                {match.venue}
+                            </p>
+                        </div>
+                    ))}
+                    {/* Knockout Phase */}
+                    <div className="bg-dark p-6 rounded-2xl border border-white/5 mt-6">
+                        <h3 className="text-xl font-black text-white uppercase mb-2">
+                            Knockout Phase
+                        </h3>
+                        <p className="text-slate-400 text-sm">Round of 32: June 28 – July 3 (Every host city)</p>
+                        <p className="text-slate-400 text-sm">Round of 16: July 4 – July 7 (NY/NJ, Philadelphia, Mexico City, etc.)</p>
+                        <p className="text-slate-400 text-sm">Quarter-Finals: July 9–11 (Boston, LA, Miami & KC)</p>
+                        <p className="text-slate-400 text-sm">Semi-Final 1: July 14, 8:00 PM (AT&T Stadium, Dallas)</p>
+                        <p className="text-slate-400 text-sm">Semi-Final 2: July 15, 8:00 PM (Mercedes-Benz Stadium, Atlanta)</p>
+                        <p className="text-slate-400 text-sm">Final: July 19, 4:00 PM (MetLife Stadium, NY/NJ)</p>
+                    </div>
+
+
+                </div>
+            );
+        }
+
+
+
+      const VISA_INFO = {
+        USA: "https://travel.state.gov/content/travel/en/us-visas.html",
+        Canada:
+          "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada.html",
+        Mexico: "https://embamex.sre.gob.mx/jordania/index.php/wc3",
+      };
+
+      function useCountdown(targetDate) {
+        const [timeLeft, setTimeLeft] = useState({
+          days: 0,
+          hrs: 0,
+          mins: 0,
+          secs: 0,
+        });
+
+        useEffect(() => {
+          const update = () => {
+            const now = new Date().getTime();
+            const dist = targetDate - now;
+            if (dist < 0) return;
+            setTimeLeft({
+              days: Math.floor(dist / (1000 * 60 * 60 * 24)),
+              hrs: Math.floor(
+                (dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+              ),
+              mins: Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60)),
+              secs: Math.floor((dist % (1000 * 60)) / 1000),
+            });
+          };
+          update();
+          const timer = setInterval(update, 1000);
+          return () => clearInterval(timer);
+        }, [targetDate]);
+
+        return timeLeft;
+      }
+
+      function App() {
+        const [view, setView] = useState("register");
+        const [profile, setProfile] = useState({
+          name: "",
+          favTeam: "",
+          favTeamCode: "",
+          isRegistered: false,
+        });
+        const [searchQuery, setSearchQuery] = useState("");
+        const countdown = useCountdown(KICKOFF_DATE);
+
+        const sortedNations = useMemo(() => {
+          return [...NATIONS_DATA].sort((a, b) => a.name.localeCompare(b.name));
+        }, []);
+
+        const filteredNations = sortedNations.filter((n) =>
+          n.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        );
+
+        const handleRegister = (e) => {
+          e.preventDefault();
+          if (!profile.name || !profile.favTeam) return;
+          const nation = NATIONS_DATA.find((n) => n.name === profile.favTeam);
+          setProfile({
+            ...profile,
+            isRegistered: true,
+            favTeamCode: nation?.code || "un",
+          });
+          setView("home");
+        };
+
+        const TournamentCountdown = ({ compact = false }) => (
+          <div
+            className={`bg-[#11141B] ${compact ? "p-4 rounded-2xl" : "p-8 rounded-[3rem]"} shadow-2xl border border-white/5 space-y-4 relative overflow-hidden w-full`}
+          >
+            <div className="flex items-center gap-3 px-2 text-blue-500 justify-center">
+              <Icon name="timer" className="w-4 h-4" />
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">
+                Kickoff 2026
+              </span>
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              {[
+                { label: "D", val: countdown.days },
+                { label: "H", val: countdown.hrs },
+                { label: "M", val: countdown.mins },
+                { label: "S", val: countdown.secs, highlight: true },
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-black/40 rounded-xl p-3 flex flex-col items-center justify-center border border-white/5 backdrop-blur-sm"
+                >
+                  <div
+                    className={`text-2xl font-black tabular-nums leading-none ${item.highlight ? "text-blue-500" : "text-white"}`}
+                  >
+                    {String(item.val).padStart(2, "0")}
+                  </div>
+                  <div className="text-[8px] font-black uppercase text-slate-500 tracking-widest mt-1">
+                    {item.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+        const LegalView = ({ type }) => {
+          // need to add the privacy page also in the same flow
+          const navigationOrder = ["home", "nations", "venues", "schedules", "travelInfo", "partners", "privacy", "about"];
+          const currentIndex = navigationOrder.indexOf(type === "Privacy" ? "privacy" : "disclaimer");
+          const privacyIndex = navigationOrder.length;
+          const disclaimerIndex = navigationOrder.length + 1;
+          
+          const isPrivacy = type === "Privacy";
+          const actualIndex = isPrivacy ? privacyIndex : disclaimerIndex;
+          
+          return (
+            <div className="max-w-2xl mx-auto space-y-6 p-6">
+              {!isPrivacy && (
+                <div className="fixed top-20 left-0 right-0 px-6 z-40 flex items-center justify-between max-w-2xl mx-auto w-full">
+                  <button
+                    onClick={() => setView("home")}
+                    className="p-2 bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors border border-white/10"
+                  >
+                    <Icon name="arrow-left" className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => setView("home")}
+                    className="p-2 bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors border border-white/10"
+                  >
+                    <Icon name="arrow-right" className="w-5 h-5" />
+                  </button>
+                </div>
+              )}
+              <div className="mt-8">
+                <h2 className="text-3xl font-black text-white italic uppercase mb-6">
+                  {type}
+                </h2>
+                <div className="bg-[#11141B] p-8 rounded-[2.5rem] border border-white/5 space-y-4 text-slate-300 leading-relaxed italic">
+                  <p>
+                    {type === "Privacy"
+                      ? "We prioritize your data security and privacy. Your profile and favorite team selections are strictly for in-app synchronization."
+                      : "Fans Hub 2026 is an unofficial fan companion app. All rights reserved by respective official bodies."}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        };
+
+        const getNavigationButtons = () => {
+          const navigationOrder = ["home", "nations", "venues", "schedules", "travelInfo", "partners", "privacy", "about"];
+          const currentIndex = navigationOrder.indexOf(view);
+          
+          const showBackNext = view !== "register" && view !== "disclaimer";
+          const hasPrev = currentIndex > 0 && view !== "home";
+          const hasNext = currentIndex < navigationOrder.length - 1;
+          
+          const handlePrev = () => {
+            if (currentIndex > 0) {
+              setView(navigationOrder[currentIndex - 1]);
+            }
+          };
+          
+          const handleNext = () => {
+            if (currentIndex < navigationOrder.length - 1) {
+              setView(navigationOrder[currentIndex + 1]);
+            }
+          };
+          
+          return { showBackNext, hasPrev, hasNext, handlePrev, handleNext };
+        };
+
+        const navButtons = getNavigationButtons();
+
+       const Nav = () => (
+                <nav className="fixed bottom-0 left-0 right-0 bg-[#0A0C10]/95 backdrop-blur-md border-t border-white/5 z-50">
+                    <div className="w-full px-2 py-3 flex items-center justify-around">
+
+                        {[
+                            ["home", "Home", "home"],
+                            ["nations", "Nations", "globe"],
+                            ["venues", "Venues", "map-pin"],
+                            ["schedules", "Schedule", "calendar"],
+                            ["travelInfo", "Travel", "plane"],
+                            ["partners", "Partners", "handshake"],
+                            ["privacy", "Privacy", "shield"],
+                            ["about", "About", "info"],
+                        ].map(([key, label, icon]) => (
+                            <button
+                                key={key}
+                                onClick={() => setView(key)}
+                                className={`flex flex-col items-center gap-1 flex-1 ${view === key ? "text-blue-500" : "text-slate-500"
+                                    }`}
+                            >
+                                <Icon name={icon} className="w-5 h-5" />
+                                <span className="text-[8px] font-black uppercase text-center">
+                                    {label}
+                                </span>
+                            </button>
+                        ))}
+
+                    </div>
+
+
+
+
+                </nav>
+            );
+
+        const NavigationArrows = () => {
+          if (!navButtons.showBackNext) return null;
+          
+          return (
+            <div className="fixed top-20 left-0 right-0 px-6 z-40 flex items-center justify-between max-w-2xl mx-auto w-full">
+              {navButtons.hasPrev ? (
+                <button
+                  onClick={navButtons.handlePrev}
+                  className="p-2 bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors border border-white/10"
+                >
+                  <Icon name="arrow-left" className="w-5 h-5" />
+                </button>
+              ) : (
+                <div />
+              )}
+              
+              {navButtons.hasNext ? (
+                <button
+                  onClick={navButtons.handleNext}
+                  className="p-2 bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors border border-white/10"
+                >
+                  <Icon name="arrow-right" className="w-5 h-5" />
+                </button>
+              ) : (
+                <div />
+              )}
+            </div>
+          );
+        };
+
+
+        return (
+          <div className="min-h-screen pb-32">
+            {view !== "register" && (
+              <header className="p-4 border-b border-white/5 flex flex-col gap-3 sticky top-0 bg-[#0A0C10]/95 backdrop-blur-md z-40">
+                <div className="flex justify-between items-center max-w-2xl mx-auto w-full px-2">
+                  <h2 className="text-sm font-black italic text-white uppercase tracking-tighter">
+                    Fans Hub 2026
+                  </h2>
+                  <Icon name="trophy" className="w-4 h-4 text-blue-500" />
+                </div>
+              </header>
+            )}
+
+            <NavigationArrows />
+
+            <main className={`pt-8 ${view === "register" ? "p-0" : "px-6"}`}>
+              {view === "register" && (
+                <div className="min-h-screen flex flex-col justify-center items-center p-6 bg-gradient-to-tr from-[#0A0C10] via-[#0A0C10] to-blue-900/20">
+                  <div className="max-w-md w-full space-y-8">
+                    <div className="text-center">
+                      <div className="mb-6 flex justify-center">
+                        <div className="bg-blue-600 p-4 rounded-3xl shadow-lg shadow-blue-500/20">
+                          <Icon
+                            name="trophy"
+                            className="w-10 h-10 text-white"
+                          />
+                        </div>
+                      </div>
+                      <h1 className="text-4xl font-black text-white italic uppercase tracking-tighter">
+                        Fans Hub 2026
+                      </h1>
+                      <p className="text-slate-400 font-medium">
+                        Global supporter registration
+                      </p>
+                    </div>
+                    <TournamentCountdown />
+                    <form onSubmit={handleRegister} className="space-y-4">
+                      <input
+                        required
+                        placeholder="Your Name"
+                        className="w-full bg-[#11141B] border border-white/5 rounded-2xl py-4 px-6 outline-none text-white focus:border-blue-500/50 transition-colors"
+                        value={profile.name}
+                        onChange={(e) =>
+                          setProfile({ ...profile, name: e.target.value })
+                        }
+                      />
+                      <select
+                        required
+                        className="w-full bg-[#11141B] border border-white/5 rounded-2xl py-4 px-6 outline-none text-white appearance-none focus:border-blue-500/50 transition-colors"
+                        value={profile.favTeam}
+                        onChange={(e) =>
+                          setProfile({ ...profile, favTeam: e.target.value })
+                        }
+                      >
+                        <option value="">Select Your Team</option>
+                        {sortedNations.map((n) => (
+                          <option key={n.name} value={n.name}>
+                            {n.name}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        type="submit"
+                        className="w-full py-5 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-blue-900/20 active:scale-[0.98] transition-all hover:bg-blue-500"
+                      >
+                        Get Access
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              )}
+
+              {view === "home" && (
+                <div className="max-w-2xl mx-auto space-y-8">
+                  <div className="text-center space-y-4">
+                    <h1 className="text-6xl font-black text-white italic tracking-tighter uppercase leading-none">
+                      Fans Hub 2026
+                    </h1>
+                    <p className=" hidden text-blue-500 font-black uppercase tracking-[0.2em] text-xs">
+                      Official Supporter Dashboard
+                    </p>
+                  </div>
+                  <TournamentCountdown />
+                  <div className="bg-gradient-to-br from-blue-700 to-blue-900 p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden group border border-white/10">
+                    <div className="relative z-10">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-blue-200/60 mb-2">
+                        Supporter Passport
+                      </p>
+                      <div className="flex items-center gap-4">
+                        <span
+                          className={`fi fi-${profile.favTeamCode} w-16 h-12 rounded-xl shadow-lg border border-white/20`}
+                        />
+                        <div>
+                          <h3 className="text-4xl font-black text-white italic uppercase leading-none">
+                            {profile.favTeam}
+                          </h3>
+                          <div className="mt-2 flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                            <p className="text-white/80 text-[10px] uppercase font-bold tracking-widest">
+                              Active Member: {profile.name}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button
+                      onClick={() => setView("privacy")}
+                      className="flex items-center gap-3 p-4 bg-[#11141B] rounded-2xl border border-white/5 text-left"
+                    >
+                      <Icon name="lock" className="w-4 h-4 text-blue-500" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">
+                        Privacy Policy
+                      </span>
+                    </button>
+                    <button
+                      onClick={() => setView("disclaimer")}
+                      className="flex items-center gap-3 p-4 bg-[#11141B] rounded-2xl border border-white/5 text-left"
+                    >
+                      <Icon
+                        name="alert-triangle"
+                        className="w-4 h-4 text-amber-500"
+                      />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">
+                        Disclaimer
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {view === "nations" && (
+                <div className="max-w-2xl mx-auto space-y-6 pt-12">
+                  <h2 className="text-3xl font-black text-white italic uppercase">
+                    Nations
+                  </h2>
+                  <div className="relative">
+                    <Icon
+                      name="search"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500"
+                    />
+                    <input
+                      placeholder="Filter nations..."
+                      className="w-full bg-[#11141B] border border-white/5 rounded-2xl py-4 pl-12 pr-4 outline-none text-white focus:border-blue-500/50"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid gap-4">
+                    {filteredNations.map((nation) => (
+                      <div
+                        key={nation.name}
+                        className="bg-[#11141B] p-6 rounded-3xl border border-white/5"
+                      >
+                        <div className="flex justify-between items-center mb-4">
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`fi fi-${nation.code} rounded-md w-8 h-6`}
+                            />
+                            <h3 className="text-xl font-black text-white uppercase italic">
+                              {nation.name}
+                            </h3>
+                          </div>
+                          <span
+                            className={`px-3 py-1 text-[10px] font-bold rounded-full uppercase ${nation.status === "Qualified" ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"}`}
+                          >
+                            {nation.status}
+                          </span>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="bg-black/30 p-4 rounded-xl border border-white/5">
+                            <div className="flex items-center gap-2 mb-2 text-blue-400">
+                              <Icon name="file-text" className="w-4 h-4" />
+                              <span className="text-[10px] font-black uppercase tracking-widest">
+                                Scouting Report
+                              </span>
+                            </div>
+                            <p className="text-sm text-slate-300 italic">
+                              "{nation.scout}"
+                            </p>
+                          </div>
+                          <div className="bg-blue-900/10 p-4 rounded-xl border border-blue-500/20">
+                            <div className="flex items-center gap-2 mb-2 text-emerald-400">
+                              <Icon name="trending-up" className="w-4 h-4" />
+                              <span className="text-[10px] font-black uppercase tracking-widest">
+                                Tournament Outlook
+                              </span>
+                            </div>
+                            <p className="text-sm text-slate-200 font-bold italic">
+                              Proj: {nation.outlook}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {view === "venues" && (
+                <div className="max-w-2xl mx-auto space-y-6  pt-12">
+                  <h2 className="text-3xl font-black text-white italic uppercase">
+                    Venues
+                  </h2>
+                  {VENUES.map((venue) => (
+                    <div
+                      key={venue.name}
+                      className="bg-[#11141B] rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl"
+                    >
+                      <div className="p-8 bg-gradient-to-br from-blue-600/20 to-transparent border-b border-white/5">
+                        <div className="flex justify-between items-start mb-4">
+                          <div>
+                            <h3 className="text-3xl font-black text-white uppercase italic leading-none mb-2">
+                              {venue.name}
+                            </h3>
+                            <div className="flex items-center gap-2 text-blue-400">
+                              <Icon name="map-pin" className="w-4 h-4" />
+                              <span className="text-[10px] font-black uppercase tracking-widest">
+                                {venue.city}, {venue.country}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="bg-white/5 px-4 py-2 rounded-2xl flex items-center gap-2 border border-white/10">
+                            <Icon
+                              name="users"
+                              className="w-4 h-4 text-slate-400"
+                            />
+                            <span className="text-lg font-black text-white">
+                              {venue.capacity}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-xs text-slate-400 font-mono italic">
+                          {venue.address}
+                        </p>
+                      </div>
+                      <div className="p-8 space-y-8">
+                        <div className="space-y-4">
+                          <div className="flex items-center gap-2 text-amber-500">
+                            <Icon name="bus" className="w-5 h-5" />
+                            <h4 className="text-xs font-black uppercase tracking-[0.2em]">
+                              Tactical Transit Guide
+                            </h4>
+                          </div>
+                          <div className="bg-black/40 p-5 rounded-2xl border border-white/5 italic text-sm text-slate-300">
+                            {venue.travel}
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <a
+                            href={venue.map}
+                            target="_blank"
+                            className="flex items-center justify-center gap-3 py-4 bg-blue-600 rounded-2xl text-white font-black uppercase tracking-widest text-[10px]"
+                          >
+                            <Icon name="navigation" className="w-4 h-4" /> Open
+                            Navigation
+                          </a>
+                          <a
+                            href={venue.office}
+                            target="_blank"
+                            className="flex items-center justify-center gap-3 py-4 bg-white/5 rounded-2xl text-slate-300 font-black uppercase tracking-widest text-[10px] border border-white/10"
+                          >
+                            <Icon name="info" className="w-4 h-4" /> City
+                            Resources
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {view === "travelInfo" && (
+                <div className="max-w-2xl mx-auto space-y-8 pt-12 pb-4">
+                  <h2 className="text-3xl font-black text-white italic uppercase">
+                    Travel Info
+                  </h2>
+                  
+                  <div className="bg-blue-600/10 border border-blue-500/20 p-6 rounded-3xl relative overflow-hidden">
+                    <Icon
+                      name="plane"
+                      className="absolute -right-4 -bottom-4 w-24 h-24 text-blue-500/10 -rotate-12"
+                    />
+                    <h3 className="text-lg font-black text-white uppercase italic mb-2 relative z-10">
+                      North America Travel Essentials
+                    </h3>
+                    <p className="text-sm text-slate-400 relative z-10">
+                      Comprehensive overview of entry requirements, visa protocols, and essential travel information for the United States, Canada, and Mexico.
+                    </p>
+                  </div>
+
+                  {[
+                    {
+                      country: "🇺🇸 United States",
+                      flag: "us",
+                      requirements: [
+                        { title: "ESTA", desc: "For citizens of Visa Waiver Program (VWP) countries. Must be obtained before boarding.", resource: "Official CBP Website", link: "https://www.cbp.gov/" },
+                        { title: "B1/B2 Visa", desc: "For citizens of non-VWP countries. Involves a form (DS-160) and an in-person interview.", resource: "State Dept Portal", link: "https://www.state.gov/" },
+                        { title: "Processing", desc: "ESTA: Minimum 72 hours (apply early). Visas: Can take several months." },
+                        { title: "Currency", desc: "United States Dollar (USD)" }
+                      ]
+                    },
+                    {
+                      country: "🇨🇦 Canada",
+                      flag: "ca",
+                      requirements: [
+                        { title: "eTA", desc: "Electronic Travel Authorization required for visa-exempt foreign nationals flying to Canada.", resource: "Canada.ca", link: "https://www.canada.ca/" },
+                        { title: "Visitor Visa", desc: "Required for specific nationalities not covered by the eTA program.", resource: "IRCC Website", link: "https://www.canada.ca/en/immigration-refugees-citizenship.html" },
+                        { title: "Cost", desc: "$7 CAD for the eTA application fee." },
+                        { title: "Note", desc: "eTA is only for air travel; entry by land/sea may have different requirements." }
+                      ]
+                    },
+                    {
+                      country: "🇲🇽 Mexico",
+                      flag: "mx",
+                      requirements: [
+                        { title: "FMM Card", desc: "Forma Migratoria Múltiple (Tourist Card). Often included in airfare or obtainable online.", resource: "INM Portal", link: "https://www.inm.gob.mx/spublic/portal/inmex.html" },
+                        { title: "Visa Policy", desc: "No visa required for citizens of the UK, EU, USA, Canada, or Japan for tourism.", resource: "SRE Website", link: "https://www.gob.mx/sre/en" },
+                        { title: "Validity", desc: "Typically granted for up to 180 days for tourism." },
+                        { title: "Currency", desc: "Mexican Peso (MXN)" }
+                      ]
+                    }
+                  ].map((country, idx) => (
+                    <div key={idx} className="bg-[#11141B] rounded-2xl border border-white/5 overflow-hidden">
+                      <div className="bg-gradient-to-r from-blue-600/20 to-transparent p-6 border-b border-white/5">
+                        <h3 className="text-2xl font-black text-white italic uppercase">
+                          {country.country}
+                        </h3>
+                      </div>
+                      <div className="p-6 space-y-4">
+                        {country.requirements.map((req, ridx) => (
+                          <div key={ridx} className="flex gap-4">
+                            <div className="flex-shrink-0 pt-1">
+                              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="font-black text-white uppercase italic text-sm mb-1">
+                                {req.title}
+                              </h4>
+                              <p className="text-slate-400 text-sm italic mb-2">
+                                {req.desc}
+                              </p>
+                              {req.resource && (
+                                req.link ? (
+                                  <a 
+                                    href={req.link} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="text-blue-400 text-xs font-semibold hover:underline flex items-center gap-1"
+                                  >
+                                    📌 {req.resource} <Icon name="external-link" className="w-3 h-3" />
+                                  </a>
+                                ) : (
+                                  <p className="text-blue-400 text-xs font-semibold">
+                                    📌 {req.resource}
+                                  </p>
+                                )
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="bg-amber-600/10 border border-amber-500/20 rounded-2xl p-6">
+                    <h3 className="text-lg font-black text-white uppercase italic mb-4 flex items-center gap-2">
+                      <Icon name="info" className="w-5 h-5" />
+                      General Travel Tips
+                    </h3>
+                    <div className="space-y-3 text-slate-400 italic text-sm">
+                      <p>✈️ <strong>Travel Insurance:</strong> Highly recommended for all three countries, particularly the US, where healthcare costs are exceptionally high for uninsured visitors.</p>
+                      <p>📱 <strong>Connectivity:</strong> Consider an eSIM that covers all three countries to avoid high roaming charges.</p>
+                      <p>💳 <strong>Tipping Culture:</strong> Standard in the US and Canada (15-22%); expected but slightly lower in Mexico (10-15%).</p>
+                      <p>🔌 <strong>Power Outlets:</strong> All three countries use Type A and Type B plugs (120V, 60Hz).</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {view === "partners" && (
+                <div className="max-w-2xl mx-auto space-y-6 pt-12 flex flex-col items-center justify-center h-96">
+                  <div className="text-center space-y-4">
+                    <Icon name="handshake" className="w-16 h-16 text-blue-500 mx-auto opacity-50" />
+                    <h2 className="text-4xl font-black text-white italic uppercase">
+                      Partners
+                    </h2>
+                    <p className="text-2xl text-slate-400 italic font-semibold">
+                      Coming Soon
+                    </p>
+                    <p className="text-slate-500 text-lg italic max-w-md">
+                      We're curating the best partnerships to enhance your World Cup experience.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {view === "privacy" && <LegalView type="Privacy" />}
+              {view === "disclaimer" && <LegalView type="Disclaimer" />}
+                                      {view === "schedules" && <SchedulesView />}
+
+                        
+
+
+                        {view === "about" && (
+                            <div className="max-w-2xl mx-auto space-y-6 px-4 sm:px-0 pt-12">
+                                <h2 className="text-4xl font-black text-white italic uppercase tracking-tight 
+                   animate-fade-in-down">
+                                    About
+                                </h2>
+                                <div className="bg-dark p-6 sm:p-8 rounded-[2.5rem] border border-white/5 
+                    text-slate-300 leading-relaxed italic space-y-4
+                    transform transition duration-700 ease-out
+                    opacity-0 scale-95
+                    animate-about-container">
+                                    <p>
+                                        Welcome to Fans Hub 2026, the definitive digital platform for the most historic FIFA World Cup™ yet.
+                                        As the beautiful game expands to 48 nations across 16 host cities in Canada, Mexico, and the United States,
+                                        we’ve built the only companion you’ll need to navigate the Tournament, including Venue and transport info,
+                                        VISA requirements, your Nation's prospects, fixture lists, as well as info from our partners,
+                                        for flights, hotel, buses and taxi bookings, food, insurance, local tourism, things to do and see,
+                                        currency, eSIMs, fan gear and memorabilia, tickets etc etc.
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+            </main>
+
+
+            {view !== "register" && <Nav />}
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
