@@ -549,84 +549,180 @@
 
       const VENUES = [
         {
-          name: "MetLife Stadium",
-          city: "East Rutherford",
-          country: "USA",
-          capacity: "82,500",
-          address: "1 MetLife Stadium Dr, East Rutherford, NJ 07073",
-          map: "https://www.google.com/maps/search/?api=1&query=MetLife+Stadium",
-          touristInfo: [
-            "American Dream Mall",
-            "Manhattan Skyline Views",
-            "Liberty State Park",
-          ],
-          travel:
-            "NJ Transit 'Meadowlands Rail Line' from Secaucus Junction. Direct '351 Meadowlands Express' bus from Port Authority NYC.",
-          office: "https://www.visitnj.org/",
-        },
-        {
-          name: "Estadio Azteca",
-          city: "Mexico City",
-          country: "Mexico",
-          capacity: "87,523",
-          address: "Calz. de Tlalpan 3465, Sta. Úrsula Coapa, Coyoacán, 04650",
-          map: "https://www.google.com/maps/search/?api=1&query=Estadio+Azteca",
-          touristInfo: [
-            "Coyoacán (Frida Kahlo Museum)",
-            "Xochimilco Canals",
-            "Zócalo Square",
-          ],
-          travel:
-            "Take Metro Line 2 to Tasqueña station, then transfer to the Tren Ligero (Light Rail) to Estación Estadio Azteca.",
-          office: "https://mexicocity.cdmx.gob.mx/",
+          name: "Toronto Stadium (BMO Field)",
+          city: "Toronto",
+          country: "Canada",
+          capacity: "45,000",
+          address: "170 Princes' Blvd, Toronto, ON M6K 3C3",
+          map: "https://www.google.com/maps/search/?api=1&query=BMO+Field+Toronto",
+          touristInfo: ["CN Tower: Iconic skyline views and the 'EdgeWalk'"],
+          travel: "GO Transit (Lakeshore W). Use 'Exhibition Station.' It’s much faster than the streetcar.",
+          office: "https://www.destinationtoronto.com/",
         },
         {
           name: "BC Place",
           city: "Vancouver",
           country: "Canada",
-          capacity: "54,500",
+          capacity: "54,000",
           address: "777 Pacific Blvd, Vancouver, BC V6B 4Y8",
-          map: "https://www.google.com/maps/search/?api=1&query=BC+Place",
-          touristInfo: [
-            "Stanley Park Seawall",
-            "Granville Island Public Market",
-            "Gastown Steam Clock",
-          ],
-          travel:
-            "SkyTrain (Expo Line) to Stadium-Chinatown Station. Vancouver False Creek Ferries also stop nearby at Plaza of Nations.",
+          map: "https://www.google.com/maps/search/?api=1&query=BC+Place+Vancouver",
+          touristInfo: ["Stanley Park: A massive urban park with seawall trails"],
+          travel: "SkyTrain (Expo Line). Get off at 'Stadium-Chinatown.' It is a seamless walk to the gates.",
           office: "https://www.destinationvancouver.com/",
         },
         {
-          name: "SoFi Stadium",
-          city: "Los Angeles",
+          name: "Mexico City Stadium (Estadio Azteca)",
+          city: "Mexico City",
+          country: "Mexico",
+          capacity: "83,000",
+          address: "Calz. de Tlalpan 3465, Coyoacán, 04650 CDMX",
+          map: "https://www.google.com/maps/search/?api=1&query=Estadio+Azteca+Mexico+City",
+          touristInfo: ["Zócalo: The historic main square and Cathedral"],
+          travel: "Metro + Light Rail. Take Metro Line 2 to Tasqueña, then transfer to the Xochimilco Light Rail.",
+          office: "https://mexicocity.cdmx.gob.mx/",
+        },
+        {
+          name: "Guadalajara Stadium (Estadio Akron)",
+          city: "Guadalajara",
+          country: "Mexico",
+          capacity: "48,000",
+          address: "Circuito J.V.C. 2800, 45014 Zapopan, Jal.",
+          map: "https://www.google.com/maps/search/?api=1&query=Estadio+Akron+Guadalajara",
+          touristInfo: ["Tlaquepaque: Famous for artisan pottery and mariachi"],
+          travel: "Expect heavy reliance on BRT (Bus Rapid Transit) or official tournament shuttle loops from fan zones.",
+          office: "https://visitguadalajara.com/",
+        },
+        {
+          name: "Estadio Monterrey (Estadio BBVA)",
+          city: "Monterrey",
+          country: "Mexico",
+          capacity: "53,500",
+          address: "Av. Pablo Livas 2011, 67190 Guadalupe, N.L.",
+          map: "https://www.google.com/maps/search/?api=1&query=Estadio+BBVA+Monterrey",
+          touristInfo: ["Fundidora Park: A huge industrial-themed urban park"],
+          travel: "Expect heavy reliance on BRT (Bus Rapid Transit) or official tournament shuttle loops from fan zones.",
+          office: "https://www.visitmonterrey.com/",
+        },
+        {
+          name: "New York NJ Stadium (MetLife)",
+          city: "East Rutherford",
           country: "USA",
-          capacity: "70,240",
+          capacity: "82,500",
+          address: "1 MetLife Stadium Dr, East Rutherford, NJ 07073",
+          map: "https://www.google.com/maps/search/?api=1&query=MetLife+Stadium",
+          touristInfo: ["Liberty Island: Home to the Statue of Liberty"],
+          travel: "NJ Transit Rail. Special 'Meadowlands' trains run from Secaucus Junction on match days.",
+          office: "https://www.nyctourism.com/",
+        },
+        {
+          name: "Dallas Stadium (AT&T Stadium)",
+          city: "Arlington",
+          country: "USA",
+          capacity: "94,000",
+          address: "1 AT&T Way, Arlington, TX 76011",
+          map: "https://www.google.com/maps/search/?api=1&query=AT%26T+Stadium+Arlington",
+          touristInfo: ["Sixth Floor Museum: History of JFK in nearby Dallas"],
+          travel: "Plan Ahead: One of the most difficult without a car. Expect to use specialized shuttles from downtown Dallas/Fort Worth.",
+          office: "https://www.visitdallas.com/",
+        },
+        {
+          name: "Kansas City Stadium (Arrowhead)",
+          city: "Kansas City",
+          country: "USA",
+          capacity: "73,000",
+          address: "1 Arrowhead Dr, Kansas City, MO 64129",
+          map: "https://www.google.com/maps/search/?api=1&query=Arrowhead+Stadium+Kansas+City",
+          touristInfo: ["Country Club Plaza: Spanish-style shopping district"],
+          travel: "Plan Ahead: Most difficult without a car. Expect to use ConnectKC26 (dedicated tournament buses).",
+          office: "https://www.visitkc.com/",
+        },
+        {
+          name: "Atlanta Stadium (Mercedes-Benz)",
+          city: "Atlanta",
+          country: "USA",
+          capacity: "75,000",
+          address: "1 AMB Dr NW, Atlanta, GA 30313",
+          map: "https://www.google.com/maps/search/?api=1&query=Mercedes-Benz+Stadium+Atlanta",
+          touristInfo: ["Georgia Aquarium: One of the world's largest"],
+          travel: "MARTA (Blue/Green Lines). Best in the US. Trains run directly from the airport to the stadium.",
+          office: "https://discoveratlanta.com/",
+        },
+        {
+          name: "Houston Stadium (NRG Stadium)",
+          city: "Houston",
+          country: "USA",
+          capacity: "72,000",
+          address: "NRG Pkwy, Houston, TX 77054",
+          map: "https://www.google.com/maps/search/?api=1&query=NRG+Stadium+Houston",
+          touristInfo: ["Space Center Houston: NASA’s visitor center"],
+          travel: "Official tournament shuttle loops or rideshare are recommended for this suburban venue.",
+          office: "https://www.visithoustontexas.com/",
+        },
+        {
+          name: "Los Angeles Stadium (SoFi)",
+          city: "Inglewood",
+          country: "USA",
+          capacity: "70,000",
           address: "1001 Stadium Dr, Inglewood, CA 90301",
-          map: "https://www.google.com/maps/search/?api=1&query=SoFi+Stadium",
-          touristInfo: [
-            "Santa Monica Pier",
-            "The Getty Center",
-            "Hollywood Walk of Fame",
-          ],
-          travel:
-            "Metro C Line to Hawthorne/Lennox Station, then use the SoFi Stadium Express Shuttle. Rideshare 'Drop-off Zone' is on the North side.",
+          map: "https://www.google.com/maps/search/?api=1&query=SoFi+Stadium+Inglewood",
+          touristInfo: ["Santa Monica Pier: Iconic beachside amusement park"],
+          travel: "Take the Metro K Line to Downtown Inglewood, then hop on the SoFi Stadium shuttle.",
           office: "https://www.discoverlosangeles.com/",
         },
         {
-          name: "Mercedes-Benz Stadium",
-          city: "Atlanta",
+          name: "Philadelphia Stadium (Lincoln Financial)",
+          city: "Philadelphia",
+          country: "USA",
+          capacity: "69,000",
+          address: "1 Lincoln Financial Field Way, Philadelphia, PA 19148",
+          map: "https://www.google.com/maps/search/?api=1&query=Lincoln+Financial+Field+Philadelphia",
+          touristInfo: ["Liberty Bell: Symbol of American independence"],
+          travel: "SEPTA (Broad St Line). Take the 'Orange Line' south to NRG Station. It’s a dedicated sports line.",
+          office: "https://www.visitphilly.com/",
+        },
+        {
+          name: "Seattle Stadium (Lumen Field)",
+          city: "Seattle",
+          country: "USA",
+          capacity: "69,000",
+          address: "800 Occidental Ave S, Seattle, WA 98134",
+          map: "https://www.google.com/maps/search/?api=1&query=Lumen+Field+Seattle",
+          touristInfo: ["Pike Place Market: Famous waterfront food market"],
+          travel: "Link Light Rail (1 Line). 'Stadium Station' is right there. Connects directly to the airport.",
+          office: "https://visitseattle.org/",
+        },
+        {
+          name: "SF Bay Area Stadium (Levi's)",
+          city: "Santa Clara",
           country: "USA",
           capacity: "71,000",
-          address: "1 AMB Dr NW, Atlanta, GA 30313",
-          map: "https://www.google.com/maps/search/?api=1&query=Mercedes-Benz+Stadium",
-          touristInfo: [
-            "Georgia Aquarium",
-            "World of Coca-Cola",
-            "Centennial Olympic Park",
-          ],
-          travel:
-            "MARTA Rail (Blue/Green lines) to GWCC/CNN Center Station or Vine City Station. Both are steps from the gate.",
-          office: "https://discoveratlanta.com/",
+          address: "4900 Marie P DeBartolo Way, Santa Clara, CA 95054",
+          map: "https://www.google.com/maps/search/?api=1&query=Levi%27s+Stadium+Santa+Clara",
+          touristInfo: ["Intel Museum: Heart of Silicon Valley tech history"],
+          travel: "VTA Light Rail. Connects to Caltrain at Mountain View for fans coming from San Francisco.",
+          office: "https://www.visitsantaclara.com/",
+        },
+        {
+          name: "Boston Stadium (Gillette)",
+          city: "Foxborough",
+          country: "USA",
+          capacity: "65,000",
+          address: "1 Patriot Pl, Foxborough, MA 02035",
+          map: "https://www.google.com/maps/search/?api=1&query=Gillette+Stadium+Foxborough",
+          touristInfo: ["Freedom Trail: Walk through 16 historical sites"],
+          travel: "MBTA Commuter Rail. Must pre-book the 'World Cup Special' train from North/South Station.",
+          office: "https://www.meetboston.com/",
+        },
+        {
+          name: "Miami Stadium (Hard Rock)",
+          city: "Miami Gardens",
+          country: "USA",
+          capacity: "65,000",
+          address: "347 Don Shula Dr, Miami Gardens, FL 33056",
+          map: "https://www.google.com/maps/search/?api=1&query=Hard+Rock+Stadium+Miami",
+          touristInfo: ["Art Deco District: Neon lights and South Beach style"],
+          travel: "No direct rail. Use the Brightline train to Aventura station, then take the dedicated shuttle to the stadium.",
+          office: "https://www.miamiandbeaches.com/",
         },
       ];
       
@@ -1103,16 +1199,9 @@
                       </div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button
-                      onClick={() => setView("privacy")}
-                      className="flex items-center gap-3 p-4 bg-[#11141B] rounded-2xl border border-white/5 text-left"
-                    >
-                      <Icon name="lock" className="w-4 h-4 text-blue-500" />
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">
-                        Privacy Policy
-                      </span>
-                    </button>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> 
+                  
+                    
                     <button
                       onClick={() => setView("disclaimer")}
                       className="flex items-center gap-3 p-4 bg-[#11141B] rounded-2xl border border-white/5 text-left"
@@ -1246,6 +1335,19 @@
                             {venue.travel}
                           </div>
                         </div>
+                        {venue.touristInfo && venue.touristInfo.length > 0 && (
+                          <div className="space-y-4">
+                            <div className="flex items-center gap-2 text-emerald-500">
+                              <Icon name="camera" className="w-5 h-5" />
+                              <h4 className="text-xs font-black uppercase tracking-[0.2em]">
+                                Tourist Hotspot
+                              </h4>
+                            </div>
+                            <div className="bg-emerald-500/5 p-5 rounded-2xl border border-emerald-500/10 italic text-sm text-slate-300">
+                              {venue.touristInfo[0]}
+                            </div>
+                          </div>
+                        )}
                         <div className="grid grid-cols-2 gap-4">
                           <a
                             href={venue.map}
